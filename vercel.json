@@ -1,3 +1,5 @@
+
+
 {
   "builds": [
     {
@@ -5,14 +7,18 @@
       "use": "@vercel/python",
       "config": {
         "runtime": "python3.12",
-        "installCommand": "pip install --upgrade pip setuptools wheel && pip install -r requirements.txt"
+        "includeFiles": [
+          "**/*.py",
+          "static/**",
+          "caricature_project/static/**"
+        ]
       }
     }
   ],
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "caricature_project/static/$1"
+      "dest": "/static/$1"
     },
     {
       "src": "/(.*)",

@@ -99,8 +99,10 @@ DATABASES = {
     )
 }
 
+
 # For Neon.tech specific optimizations
 OPTIMIZE_DB_PERFORMANCE = True
+
 
 import os
 
