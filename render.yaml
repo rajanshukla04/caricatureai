@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: caricature-app
+    runtime: python
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+    startCommand: gunicorn caricature_project.wsgi:application
+    envVars:
+      # - key: DATABASE_URL
+      #   value: your-postgres-connection-string
+      - key: SECRET_KEY
+        value: your-django-secret-key
+      - key: DJANGO_SETTINGS_MODULE
+        value: caricature_project.settings.production
