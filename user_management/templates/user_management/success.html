@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .animated-gradient {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            min-height: 100vh;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="animated-gradient">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-md mx-auto glass-card rounded-2xl shadow-2xl p-8 transform hover:scale-[1.02] transition-all duration-300">
+            <h1 class="text-3xl font-bold mb-6 text-center text-white drop-shadow-md">
+                🎉 User Details
+            </h1>
+            
+            <div class="space-y-4 mb-8">
+                <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm">
+                    <p class="font-medium text-indigo-100">Name:</p>
+                    <p class="text-white text-lg font-semibold">{{ profile.name }}</p>
+                </div>
+                
+                <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm">
+                    <p class="font-medium text-indigo-100">Company:</p>
+                    <p class="text-white text-lg font-semibold">{{ profile.company }}</p>
+                </div>
+                
+                <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm">
+                    <p class="font-medium text-indigo-100">Email:</p>
+                    <p class="text-white text-lg font-semibold break-all">{{ profile.email }}</p>
+                </div>
+            </div>
+
+            <form method="POST" action="{% url 'success_page' user_id=profile.id %}">
+                {% csrf_token %}
+                <div class="flex gap-4">
+                    <a href="{% url 'qr_checkin' %}" 
+                       class="w-1/2 px-4 py-3 bg-purple-500/20 text-white rounded-xl hover:bg-purple-500/30 
+                              text-center transition-all duration-300 backdrop-blur-sm
+                              border border-purple-300/30 hover:border-purple-400/50
+                              flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Back to Scanner
+                    </a>
+                    <button type="submit" 
+                            class="w-1/2 px-4 py-3 bg-emerald-500/80 text-white rounded-xl hover:bg-emerald-600 
+                                   transition-all duration-300 hover:shadow-lg backdrop-blur-sm
+                                   flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Confirm
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

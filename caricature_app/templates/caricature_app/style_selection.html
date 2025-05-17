@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Style</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .animated-gradient {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            min-height: 100vh;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        #loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body class="animated-gradient">
+    <div id="loading-overlay" class="flex items-center justify-center">
+        <img src="https://i.giphy.com/3NwOyKt1n7S6KccVQg.webp" alt="Loading" class="w-32 h-32">
+    </div>
+
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-center text-white mb-8 drop-shadow-md">
+            Select Your Image Style
+        </h1>
+
+        <div class="glass-card rounded-2xl shadow-2xl p-8">
+            <div id="style-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {% for style in page_obj %}
+                <div class="style-card relative overflow-hidden rounded-xl transition-all duration-300 hover:scale-105">
+                    <form method="POST" action="{% url 'generate_caricature' %}" class="h-full">
+                        {% csrf_token %}
+                        <input type="hidden" name="style_id" value="{{ style.id }}">
+                        
+                        <div class="aspect-square bg-white/10 relative group">
+                            <img 
+                                src="{{ style.image_url }}" 
+                                alt="{{ style.name }}"
+                                class="w-full h-full object-contain p-2"
+                                loading="lazy"
+                            >
+                            
+                            <button 
+                                type="submit"
+                                class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/50 backdrop-blur-sm"
+                            >
+                                <span class="text-white font-medium px-6 py-2 rounded-full bg-blue-600/80 hover:bg-blue-700 transition-colors duration-200">
+                                    Select Style
+                                </span>
+                            </button>
+                        </div>
+                        
+                        <div class="p-3 bg-white/10">
+                            <h3 class="text-base font-semibold text-white truncate">{{ style.name }}</h3>
+                        </div>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="flex justify-center mt-8 space-x-4">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" 
+                       class="px-4 py-2 bg-white/20 text-white rounded-xl hover:bg-white/30 transition-all">
+                        Previous
+                    </a>
+                {% endif %}
+                
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" 
+                       class="px-4 py-2 bg-white/20 text-white rounded-xl hover:bg-white/30 transition-all">
+                        Next
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Show loading overlay on form submission
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', () => {
+                document.getElementById('loading-overlay').style.display = 'flex';
+                document.querySelector('.container').style.display = 'none';
+            });
+        });
+    });
+    </script>
+</body>
+</html>

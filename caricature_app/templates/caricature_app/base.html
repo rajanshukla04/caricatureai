@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caricature Generator</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Alpine.js for interactivity -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Custom font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 font-[Poppins]">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <a href="/" class="text-2xl font-bold text-blue-600">CaricatureAI</a>
+                <div class="flex space-x-4">
+                    <a href="{% url 'camera_view' %}" class="px-3 py-2 rounded hover:bg-gray-100">Camera</a>
+                    <a href="{% url 'style_selection' %}" class="px-3 py-2 rounded hover:bg-gray-100">Styles</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Messages/Notifications -->
+        {% if messages %}
+        <div class="mb-8">
+            {% for message in messages %}
+            <div class="p-4 bg-blue-100 text-blue-700 rounded-lg" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}
+        <!-- Child templates will insert content here -->
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t mt-8">
+        <div class="max-w-7xl mx-auto px-4 py-6">
+            <p class="text-center text-gray-600">
+                © 2023 CaricatureAI. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Custom Scripts Block -->
+    {% block scripts %}
+    {% endblock %}
+
+    <!-- Basic Animation Helper -->
+    <script>
+        // Simple fade-in animation
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('opacity-0');
+            setTimeout(() => {
+                document.body.classList.remove('opacity-0');
+                document.body.classList.add('transition-opacity', 'duration-300');
+            }, 50);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome | Caricature App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .animate-gradient {
+            background-size: 400% 400%;
+            animation: gradientBG 8s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body class="h-screen flex items-center justify-center animate-gradient bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white">
+
+    <div class="text-center p-8 bg-white bg-opacity-10 backdrop-blur-md rounded-2xl shadow-2xl max-w-xl">
+        <h1 class="text-5xl font-extrabold mb-6 animate-pulse">Welcome to Caricature App</h1>
+        <p class="text-lg mb-8">Transform your selfies into hilarious and artistic caricatures using AI magic!</p>
+
+
+      
+       
+        <a href="{% url 'camera_view' %}" class="inline-block px-8 py-3 bg-white text-purple-600 font-semibold text-lg rounded-full shadow-lg hover:scale-105 transition-all duration-300">
+            🎨 Click Here to Start
+        </a>
+       
+    </div>
+
+</body>
+</html>

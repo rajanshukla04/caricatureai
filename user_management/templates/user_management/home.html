@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management System</title>
+    <!-- Include Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .animated-gradient {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            height: 100vh;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body class="animated-gradient">
+    <div class="flex flex-col items-center justify-center h-screen">
+        <!-- Main Heading -->
+        <h1 class="text-white text-5xl md:text-6xl font-bold mb-8 text-center drop-shadow-lg">
+            Self Check In
+        </h1>
+
+        <!-- Buttons Container -->
+        <div class="flex flex-col md:flex-row gap-6">
+            <!-- QR Code Button -->
+            <a href="{% url 'qr_checkin' %}" 
+               class="bg-white/20 backdrop-blur-lg px-8 py-4 rounded-xl 
+                      text-white text-2xl font-semibold hover:bg-white/30
+                      transition-all duration-300 transform hover:scale-105
+                      shadow-lg">
+                With QR Code
+            </a>
+
+            <!-- Without QR Code Button -->
+            <a href="{% url 'manual_checkin' %}" 
+               class="bg-white/20 backdrop-blur-lg px-8 py-4 rounded-xl 
+                      text-white text-2xl font-semibold hover:bg-white/30
+                      transition-all duration-300 transform hover:scale-105
+                      shadow-lg">
+                Without QR Code
+            </a>
+        </div>
+    </div>
+</body>
+</html>
