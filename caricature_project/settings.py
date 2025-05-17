@@ -75,13 +75,27 @@ WSGI_APPLICATION = 'caricature_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
+import os
+import dj_database_url
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL', 'postgresql://neondb_owner:npg_TwZEPBd7NyK1@ep-red-bird-a46m51ne-pooler.us-east-1.aws.neon.tech/caricatureai?sslmode=require'),
+        conn_max_age=600,
+        conn_health_checks=True
+    )
 }
 
+# For Neon.tech specific optimizations
+OPTIMIZE_DB_PERFORMANCE = True
 
 import os
 
@@ -129,3 +143,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Static files configuration
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
