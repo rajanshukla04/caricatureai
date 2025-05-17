@@ -1,0 +1,24 @@
+{
+  "builds": [
+    {
+      "src": "your_project/wsgi.py",
+      "use": "@vercel/python",
+      "config": {
+        "runtime": "python3.12",
+        "installCommand": "pip install --upgrade setuptools && pip install -r requirements.txt"
+      }
+    }
+  ],
+
+
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "caricature_project/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "caricature_project/wsgi.py"
+    }
+  ]
+}
